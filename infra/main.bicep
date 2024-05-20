@@ -11,7 +11,7 @@ param location string
 
 // azure open ai -- only regions supporting gpt-35-turbo v1106
 @description('Location for the OpenAI resource group')
-@allowed(['australiaeast', 'canadaeast', 'francecentral', 'southindia', 'uksouth', 'swedencentral', 'westus'])
+@allowed(['japaneast','australiaeast', 'canadaeast', 'francecentral', 'southindia', 'uksouth', 'swedencentral', 'westus'])
 @metadata({
   azd: {
     type: 'location'
