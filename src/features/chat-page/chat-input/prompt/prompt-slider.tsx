@@ -15,6 +15,7 @@ import {
 import { Book } from "lucide-react";
 import { FC } from "react";
 import { inputPromptStore, useInputPromptState } from "./input-prompt-store";
+import "../../../../styles/hidden.css"; // CSSファイルのインポート
 
 interface SliderProps {}
 
@@ -34,8 +35,10 @@ export const PromptSlider: FC<SliderProps> = (props) => {
           variant={"ghost"}
           onClick={() => inputPromptStore.openPrompt()}
           aria-label="Open prompt library"
+          className="hidden-icon" // hidden-iconクラスを適用
         >
-          <Book size={16} />
+          {/* Bookアイコンを非表示にする */}
+          {false && <Book size={16} />}
         </Button>
       </SheetTrigger>
 

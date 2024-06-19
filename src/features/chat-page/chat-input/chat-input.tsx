@@ -46,7 +46,7 @@ export const ChatInput = () => {
     if (formRef.current) {
       formRef.current.requestSubmit();
     }
-  };
+  }
 
   return (
     <ChatInputForm
@@ -63,6 +63,9 @@ export const ChatInput = () => {
             ResetInputRows();
           }
         }}
+
+
+
         onKeyDown={(e) => {
           onKeyDown(e, submit);
         }}
@@ -76,14 +79,14 @@ export const ChatInput = () => {
         }}
       />
       <ChatInputActionArea>
-        <ChatInputSecondaryActionArea>
-          <AttachFile
-            onClick={(formData) =>
-              fileStore.onFileChange({ formData, chatThreadId })
-            }
-          />
+      <ChatInputSecondaryActionArea>
+         <AttachFile
+         onClick={(formData) =>
+            fileStore.onFileChange({ formData, chatThreadId })
+         }
+         />   
           <PromptSlider />
-        </ChatInputSecondaryActionArea>
+      </ChatInputSecondaryActionArea>
         <ChatInputPrimaryActionArea>
           <ImageInput />
           <Microphone

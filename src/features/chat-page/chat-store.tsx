@@ -171,34 +171,36 @@ class ChatState {
           const responseType = JSON.parse(event.data) as AzureChatCompletion;
           switch (responseType.type) {
             case "functionCall":
-              const mappedFunction: ChatMessageModel = {
-                id: uniqueId(),
-                content: responseType.response.arguments,
-                name: responseType.response.name,
-                role: "function",
-                createdAt: new Date(),
-                isDeleted: false,
-                threadId: this.chatThreadId,
-                type: "CHAT_MESSAGE",
-                userId: "",
-                multiModalImage: "",
-              };
-              this.addToMessages(mappedFunction);
+              //const mappedFunction: ChatMessageModel = {
+              //  id: uniqueId(),
+              //  content: responseType.response.arguments,
+              //  name: responseType.response.name,
+              //  role: "function",
+              //  createdAt: new Date(),
+              //  isDeleted: false,
+              //  threadId: this.chatThreadId,
+              //  type: "CHAT_MESSAGE",
+              //  userId: "",
+              //  multiModalImage: "",
+              //};
+              //this.addToMessages(mappedFunction);
+              //"functionCall" および "functionCallResult" の処理をスキップ
               break;
             case "functionCallResult":
-              const mappedFunctionResult: ChatMessageModel = {
-                id: uniqueId(),
-                content: responseType.response,
-                name: "tool",
-                role: "tool",
-                createdAt: new Date(),
-                isDeleted: false,
-                threadId: this.chatThreadId,
-                type: "CHAT_MESSAGE",
-                userId: "",
-                multiModalImage: "",
-              };
-              this.addToMessages(mappedFunctionResult);
+              //const mappedFunctionResult: ChatMessageModel = {
+              //  id: uniqueId(),
+              //  content: responseType.response,
+              //  name: "tool",
+              //  role: "tool",
+              //  createdAt: new Date(),
+              //  isDeleted: false,
+              //  threadId: this.chatThreadId,
+              //  type: "CHAT_MESSAGE",
+              //  userId: "",
+              //  multiModalImage: "",
+              //};
+              //this.addToMessages(mappedFunctionResult);
+              //"functionCall" および "functionCallResult" の処理をスキップ
               break;
             case "content":
               const mappedContent: ChatMessageModel = {

@@ -43,23 +43,26 @@ export const MainMenu = async () => {
               <VenetianMask {...menuIconProps} />
             </MenuLink>
           </MenuItem>
-          <MenuItem tooltip="extensions">
+          {/* 拡張機能のメニュー項目を非表示 */}
+          {/* <MenuItem tooltip="extensions">
             <MenuLink href="/extensions" ariaLabel="Go to the Extensions configuration page">
               <PocketKnife {...menuIconProps} />
             </MenuLink>
-          </MenuItem>
-          <MenuItem tooltip="prompts">
+          </MenuItem>*/}
+          {/* プロンプトライブラリのメニュー項目を非表示 */}
+          {/* <MenuItem tooltip="prompts">
             <MenuLink href="/prompt" ariaLabel="Go to the Prompt Library configuration page">
               <Book {...menuIconProps} />
             </MenuLink>
-          </MenuItem>
+          </MenuItem> */}
           {user.isAdmin && (
             <>
-              <MenuItem tooltip="reporting">
+              {/* レポートのメニュー項目を非表示 */}
+              {/* <MenuItem tooltip="reporting">
                 <MenuLink href="/reporting" ariaLabel="Go to the Admin reporting" >
                   <Sheet {...menuIconProps} />
                 </MenuLink>
-              </MenuItem>
+              </MenuItem> */}
             </>
           )}
         </MenuItemContainer>

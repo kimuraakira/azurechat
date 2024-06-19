@@ -27,11 +27,12 @@ export const LogIn: FC<LoginProps> = (props) => {
           <span className="text-primary">{AI_NAME}</span>
         </CardTitle>
         <CardDescription>
-          Login in with your GitHub or Microsoft 365 account
+          Login in with your Microsoft 365 account (@aeonet.co.jp)
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <Button onClick={() => signIn("github")}>GitHub</Button>
+        {/* GitHubログインボタンを非表示 */}
+        {/* <Button onClick={() => signIn("github")}>GitHub</Button> */}
         <Button onClick={() => signIn("azure-ad")}> Microsoft 365</Button>
         {props.isDevMode ? (
           <Button onClick={() => signIn("localdev")}>
@@ -39,6 +40,11 @@ export const LogIn: FC<LoginProps> = (props) => {
           </Button>
         ) : null}
       </CardContent>
+      {/* 文言の追加 */}
+      <div className="text-center text-sm text-muted-foreground px-4 py-2">
+       このシステムは「生成AIの活用方法と注意点」の資料を読み、ChatGPT(AzureChat)の
+       正しい利用方法を理解しない限り利用できません。あらかじめご了承ください。
+      </div>
     </Card>
   );
 };

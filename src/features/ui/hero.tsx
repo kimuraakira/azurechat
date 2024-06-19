@@ -4,6 +4,7 @@ import { FC, PropsWithChildren } from "react";
 interface HeroProps extends PropsWithChildren {
   title: React.ReactNode;
   description: string;
+  showExtensions: boolean;  //木村追加分
 }
 
 export const Hero: FC<HeroProps> = (props) => {
@@ -16,7 +17,9 @@ export const Hero: FC<HeroProps> = (props) => {
           </h1>
           <p className="text-muted-foreground max-w-xl">{props.description}</p>
         </div>
-        <div className="grid grid-cols-3 gap-2">{props.children}</div>
+        {props.showExtensions && (      //木村追加
+          <div className="grid grid-cols-3 gap-2">{props.children}</div>
+        )}   
       </div>
     </div>
   );

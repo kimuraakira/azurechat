@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import { Hero, HeroButton } from "@/features/ui/hero";
 import { Atom, Languages, VenetianMask } from "lucide-react";
 import { personaStore } from "../persona-store";
@@ -13,6 +14,7 @@ export const PersonaHero = () => {
       }
       description={`  Persona is a representation of a personality that you can use to
     have a conversation with.`}
+      showExtensions={true}  // 木村追加、ここをtrueにすることでHero表示。
     >
       <HeroButton
         title="New Persona"
@@ -35,14 +37,14 @@ Example:
       />
       <HeroButton
         title="Translator"
-        description="English to French translator."
+        description="English to Japanese translator."
         icon={<Languages />}
         onClick={() =>
           personaStore.newPersonaAndOpen({
-            name: "English to French translator",
+            name: "English to Japanese translator",
             personaMessage:
-              "You are an expert in translating English to French. You will be provided with a sentence in English, and your task is to translate it into French.",
-            description: "English to French translator.",
+              "You are an expert in translating English to Japanese. You will be provided with a sentence in English, and your task is to translate it into French.",
+            description: "English to Japanese translator.",
           })
         }
       />

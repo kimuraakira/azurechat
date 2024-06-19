@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FC, useRef } from "react";
 import { Button } from "../../button";
 import { InputImageStore, useInputImage } from "./input-image-store";
+import "../../../../styles/hidden.css"; // CSSファイルのインポート
 
 export const ImageInput: FC = () => {
   const { base64Image, previewImage } = useInputImage();
@@ -53,8 +54,10 @@ export const ImageInput: FC = () => {
         type="button"
         onClick={handleButtonClick}
         aria-label="Add an image to the chat input"
+        className="hidden-icon" // hidden-iconクラスを適用
       >
-        <ImageIcon size={16} />
+        {/* ImageIconを非表示にする */}
+        { false && <ImageIcon size={16} />}
       </Button>
     </div>
   );

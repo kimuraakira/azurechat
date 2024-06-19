@@ -2,6 +2,7 @@
 
 import React from "react";
 import { LoadingIndicator } from "../../loading";
+import { Microphone } from "./microphone"; // 仮のパス
 
 interface ChatInputAreaProps {
   status?: string;
@@ -48,5 +49,14 @@ export const ChatInputPrimaryActionArea = (props: {
 export const ChatInputSecondaryActionArea = (props: {
   children?: React.ReactNode;
 }) => {
-  return <div className="flex">{props.children}</div>;
+  return ( <div className="flex">
+      {React.Children.map(props.children, (child) => {
+        // microphone アイコンを検出して非表示にする
+        if (React.isValidElement(child) && child.type === Microphone) {
+          return null;
+        }
+        return child;
+      })}
+    </div>
+  );
 };

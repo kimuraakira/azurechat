@@ -15,6 +15,9 @@ interface ChatPersonaProps {
 }
 
 export const ChatHome: FC<ChatPersonaProps> = (props) => {
+  //const showExtensions = props.extensions && props.extensions.length > 0; //木村追加
+  const showExtensions = false;  //木村追加
+
   return (
     <ScrollArea className="flex-1">
       <main className="flex flex-1 flex-col gap-6 pb-6">
@@ -32,12 +35,14 @@ export const ChatHome: FC<ChatPersonaProps> = (props) => {
             </>
           }
           description={AI_DESCRIPTION}
-        ></Hero>
+          showExtensions={showExtensions} // showExtensionsプロパティを追加
+        />                     
         <div className="container max-w-4xl flex gap-20 flex-col">
           <div>
-            <h2 className="text-2xl font-bold mb-3">Extensions</h2>
+            <h2 className="text-2xl font-bold mb-3">No Items</h2>   {/* Extensions */}
 
-            {props.extensions && props.extensions.length > 0 ? (
+            {showExtensions ? (     //木村追加
+            //{props.extensions && props.extensions.length > 0 ? (   //木村削除
               <div className="grid grid-cols-3 gap-3">
                 {props.extensions.map((extension) => {
                   return (
@@ -49,9 +54,9 @@ export const ChatHome: FC<ChatPersonaProps> = (props) => {
                   );
                 })}
               </div>
-            ) :
-              <p className="text-muted-foreground max-w-xl">No extentions created</p>
-            }
+            ):( 
+              <p className="text-muted-foreground max-w-xl">  </p> 
+            )}
 
           </div>
           <div>

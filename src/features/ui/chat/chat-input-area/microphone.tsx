@@ -1,5 +1,6 @@
 import { Mic, Square } from "lucide-react";
 import { Button } from "../../button";
+import "../../../../styles/hidden.css"; // CSSファイルのインポート
 
 export const Microphone = (props: {
   isPlaying: boolean;
@@ -24,6 +25,7 @@ export const Microphone = (props: {
           type="button"
           variant={"ghost"}
           onClick={props.stopPlaying}
+          className="hidden-icon" // CSSクラスを追加
         >
           <Square size={16} />
         </Button>
@@ -36,7 +38,7 @@ export const Microphone = (props: {
           onMouseUp={stopRecognition}
           onMouseLeave={stopRecognition}
           className={
-            props.isMicrophoneReady ? "bg-red-400 hover:bg-red-400" : ""
+            props.isMicrophoneReady ? "bg-red-400 hover:bg-red-400" : "hidden-icon"
           }
           aria-label="Microphone for speech input"
         >
