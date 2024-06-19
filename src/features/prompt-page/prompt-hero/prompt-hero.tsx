@@ -14,6 +14,7 @@ export const PromptHero = () => {
       description={
         "Prompt templates are statements or questions meant to help users get creative without having to come up with ideas from scratch."
       }
+      showExtensions={false}  // 木村追加。
     >
       <HeroButton
         title="Add New Prompt"
