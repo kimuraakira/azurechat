@@ -14,6 +14,7 @@ export const ReportingHero = () => {
       description={
         "Administration view for monitoring conversation history for all users"
       }
+      showExtensions={false}  // 木村追加。
     ></Hero>
   );
 };
