@@ -27,13 +27,12 @@
     "openAILocation": {
       "type": "string",
       "allowedValues": [
-        "australiaeast",
-        "canadaeast",
-        "francecentral",
-        "southindia",
-        "uksouth",
-        "swedencentral",
-        "westus"
+        "northcentralus",
+        "japaneast", 
+        "canadaeast", 
+        "francecentral", 
+        "southcentralus", 
+        "westus","eastus"
       ],
       "metadata": {
         "azd": {
@@ -64,7 +63,7 @@
     },
     "chatGptModelVersion": {
       "type": "string",
-      "defaultValue": "1106"
+      "defaultValue": "0125"
     },
     "embeddingDeploymentName": {
       "type": "string",
@@ -318,7 +317,7 @@
             },
             "chatGptModelVersion": {
               "type": "string",
-              "defaultValue": "1106"
+              "defaultValue": "0125"
             },
             "embeddingDeploymentName": {
               "type": "string",

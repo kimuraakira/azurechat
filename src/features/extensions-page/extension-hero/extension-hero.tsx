@@ -17,6 +17,7 @@ export const ExtensionHero = () => {
       }
       description={`Seamlessly connect ${AI_NAME} with internal APIs or external
         resources`}
+      showExtensions={false}  // 木村追加。
     >
       <NewExtension />
       <BingSearch />
