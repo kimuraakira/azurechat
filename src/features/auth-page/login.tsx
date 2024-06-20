@@ -1,5 +1,4 @@
 "use client";
-import '../../styles/styles.css';
 import { AI_NAME } from "@/features/theme/theme-config";
 import { signIn } from "next-auth/react";
 import { FC } from "react";
