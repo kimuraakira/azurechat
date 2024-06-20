@@ -1,4 +1,5 @@
 "use client";
+import '../../styles/styles.css';
 import { AI_NAME } from "@/features/theme/theme-config";
 import { signIn } from "next-auth/react";
 import { FC } from "react";
@@ -34,7 +35,6 @@ export const LogIn: FC<LoginProps> = (props) => {
         {/* GitHubログインボタンを表示 */}
         <Button onClick={() => signIn("github")}>GitHub</Button> 
         <Button onClick={() => signIn("azure-ad")}> Microsoft 365</Button>
-        <Button onClick={() => signIn("localdev")}> Basic Auth (DEV) </Button>
         {props.isDevMode ? (
           <Button onClick={() => signIn("localdev")}>
             Basic Auth (DEV ONLY)
@@ -44,8 +44,8 @@ export const LogIn: FC<LoginProps> = (props) => {
       {/* 文言の追加 */}
       <div className="text-center text-sm text-muted-foreground px-4 py-2">
        このシステムは「生成AIの活用方法と注意点」の資料を読み、ChatGPT(AzureChat)の
-       正しい利用方法を理解しない限り利用できません。あらかじめご了承ください。
-      </div>
+       正しい利用方法を理解しない限り利用できません。あらかじめご了承ください。</div>
+       <div onClick={() => signIn("localdev")} style={{ color: 'transparent' }}> 。</div>
     </Card>
   );
 };
