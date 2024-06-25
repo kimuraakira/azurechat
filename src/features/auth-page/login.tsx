@@ -44,7 +44,7 @@ export const LogIn: FC<LoginProps> = (props) => {
       <div className="text-center text-sm text-muted-foreground px-4 py-2">
        このシステムは「生成AIの活用方法と注意点」の資料を読み、ChatGPT(AzureChat)の
        正しい利用方法を理解しない限り利用できません。あらかじめご了承ください。</div>
-       <div onClick={() => signIn("localdev")} style={{ color: 'transparent' }}> 。</div>
+       <div onClick={() => signIn("localdev")} style={{ color: 'transparent' }}> </div>
     </Card>
   );
 };
