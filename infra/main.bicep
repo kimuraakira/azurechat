@@ -20,12 +20,12 @@ param location string
 param openAILocation string
 
 param openAISku string = 'S0'
-param openAIApiVersion string = '2023-12-01-preview'
+param openAIApiVersion string = '2024-05-01-preview'
 
 param chatGptDeploymentCapacity int = 1
-param chatGptDeploymentName string = 'chat-gpt-35-turbo'
-param chatGptModelName string = 'gpt-35-turbo'
-param chatGptModelVersion string = '0125'
+param chatGptDeploymentName string = 'chat-gpt-4o'
+param chatGptModelName string = 'chat-gpt-4o'
+param chatGptModelVersion string = '2024-05-13'
 param embeddingDeploymentName string = 'embedding'
 param embeddingDeploymentCapacity int = 1
 param embeddingModelName string = 'text-embedding-ada-002'
