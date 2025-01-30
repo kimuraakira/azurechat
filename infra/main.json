@@ -47,7 +47,7 @@
     },
     "openAIApiVersion": {
       "type": "string",
-      "defaultValue": "2023-12-01-preview"
+      "defaultValue": "2024-05-01-preview"
     },
     "chatGptDeploymentCapacity": {
       "type": "int",
@@ -55,15 +55,15 @@
     },
     "chatGptDeploymentName": {
       "type": "string",
-      "defaultValue": "chat-gpt-35-turbo"
+      "defaultValue": "chat-gpt-4o"
     },
     "chatGptModelName": {
       "type": "string",
-      "defaultValue": "gpt-35-turbo"
+      "defaultValue": "gpt-4o"
     },
     "chatGptModelVersion": {
       "type": "string",
-      "defaultValue": "0125"
+      "defaultValue": "2024-05-13"
     },
     "embeddingDeploymentName": {
       "type": "string",
