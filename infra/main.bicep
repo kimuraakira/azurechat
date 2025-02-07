@@ -111,8 +111,3 @@ module resources 'resources.bicep' = {
 output APP_URL string = resources.outputs.url
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
-
-- name: Upload SARIF
-  uses: github/codeql-action/upload-sarif@v3
-  with:
-    sarif_file: /home/runner/work/azurechat/azurechat/.gdn/msdo.sarif
