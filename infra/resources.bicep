@@ -97,7 +97,7 @@ var llmDeployments = [
   }
 ]
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2023-04-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2024-01-01' = { // Updated API version
   name: appservice_name
   location: location
   tags: tags
@@ -286,7 +286,7 @@ resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2022-
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2024-12-01-preview' = {
+resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = { // Updated API version
   name: keyVaultName
   location: location
   properties: {
@@ -374,6 +374,14 @@ resource kv 'Microsoft.KeyVault/vaults@2024-12-01-preview' = {
   }
 }
 
+resource keyVaultSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = { // Updated API version
+  parent: kv
+  name: 'secretName'
+  properties: {
+    value: 'secretValue'
+  }
+}
+
 resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-12-01-preview' = {
   name: cosmos_name
   location: location
@@ -447,7 +455,7 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource searchService 'Microsoft.Search/searchServices@2025-02-01-preview' = {
+resource searchService 'Microsoft.Search/searchServices@2024-06-01' = { // Updated API version
   name: search_name
   location: location
   tags: tags
@@ -481,11 +489,11 @@ resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10
   name: deployment.name
   properties: {
     model: deployment.model
-    raiPolicyName: contains(deployment, 'raiPolicyName') ? deployment.raiPolicyName : null
+    //raiPolicyName: contains(deployment, 'raiPolicyName') ? deployment.raiPolicyName : null
   }
-  sku: contains(deployment, 'sku') ? deployment.sku : {
+  sku: { //contains(deployment, 'sku') ? deployment.sku : {
     name: 'Standard'
-    capacity: deployment.capacity
+    //capacity: deployment.capacity
   }
 }]
 
