@@ -90,11 +90,14 @@ var llmDeployments = [
       name: embeddingModelName
       version: '2'
     }
-    capacity: embeddingDeploymentCapacity
+    sku: {   // sku の追加
+      name: 'Standard'
+      capacity: embeddingDeploymentCapacity
+    }
   }
 ]
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
+resource appServicePlan 'Microsoft.Web/serverfarms@2023-04-01' = {
   name: appservice_name
   location: location
   tags: tags
@@ -111,7 +114,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = {
   kind: 'linux'
 }
 
-resource webApp 'Microsoft.Web/sites@2020-06-01' = {
+resource webApp 'Microsoft.Web/sites@2024-04-01' = {
   name: webapp_name
   location: location
   tags: union(tags, { 'azd-service-name': 'frontend' })
@@ -253,7 +256,7 @@ resource webApp 'Microsoft.Web/sites@2020-06-01' = {
   }
 }
 
-resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: la_workspace_name
   location: location
 }
@@ -273,7 +276,7 @@ resource webDiagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01
   }
 }
 
-resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
+resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   name: guid(kv.id, webApp.name, keyVaultSecretsOfficerRole)
   scope: kv
   properties: {
@@ -283,7 +286,7 @@ resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2020-
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
+resource kv 'Microsoft.KeyVault/vaults@2024-12-01-preview' = {
   name: keyVaultName
   location: location
   properties: {
@@ -371,7 +374,7 @@ resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = {
   }
 }
 
-resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
+resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-12-01-preview' = {
   name: cosmos_name
   location: location
   tags: tags
@@ -398,7 +401,7 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15
   }
 }
 
-resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15' = {
+resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-12-01-preview' = {
   name: historyContainerName
   parent: database
   properties: {
@@ -414,7 +417,7 @@ resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/co
   }
 }
 
-resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15' = {
+resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-12-01-preview' = {
   name: configContainerName
   parent: database
   properties: {
@@ -430,7 +433,7 @@ resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/con
   }
 }
 
-resource formRecognizer 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+resource formRecognizer 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: form_recognizer_name
   location: location
   tags: tags
@@ -444,7 +447,7 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   }
 }
 
-resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
+resource searchService 'Microsoft.Search/searchServices@2025-02-01-preview' = {
   name: search_name
   location: location
   tags: tags
@@ -458,7 +461,7 @@ resource searchService 'Microsoft.Search/searchServices@2022-09-01' = {
   }
 }
 
-resource azureopenai 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+resource azureopenai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: openai_name
   location: openAiLocation
   tags: tags
@@ -473,7 +476,7 @@ resource azureopenai 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
 }
 
 @batchSize(1)
-resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = [for deployment in llmDeployments: {
+resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = [for deployment in llmDeployments: {
   parent: azureopenai
   name: deployment.name
   properties: {
@@ -486,7 +489,7 @@ resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05
   }
 }]
 
-resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: openai_dalle_name
   location: dalleLocation
   tags: tags
@@ -516,7 +519,7 @@ resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
 
 
 
-resource azureopenaivision 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+resource azureopenaivision 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: openai_gpt_vision_name
   location: gptvisionLocation
   tags: tags
@@ -545,7 +548,7 @@ resource azureopenaivision 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   }
 }
 
-resource speechService 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
+resource speechService 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   name: speech_service_name
   location: location
   tags: tags
@@ -560,7 +563,7 @@ resource speechService 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
 }
 
 // TODO: define good default Sku and settings for storage account
-resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storage_name
   location: location
   tags: tags
