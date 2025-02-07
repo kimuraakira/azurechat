@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.33.93.31351",
-      "templateHash": "16414433326637110799"
+      "templateHash": "16408242783360906232"
     }
   },
   "parameters": {
@@ -283,7 +283,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.33.93.31351",
-              "templateHash": "5207820396680860484"
+              "templateHash": "4067363612527260363"
             }
           },
           "parameters": {
@@ -578,7 +578,7 @@
               "name": "[format('{0}/{1}', variables('keyVaultName'), 'AZURE-SEARCH-API-KEY')]",
               "properties": {
                 "contentType": "text/plain",
-                "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('search_name')), '2025-02-01-preview').secondaryKey]"
+                "value": "[listAdminKeys(resourceId('Microsoft.Search/searchServices', variables('search_name')), '2024-06-01').secondaryKey]"
               },
               "dependsOn": [
                 "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]",
@@ -656,7 +656,7 @@
             },
             {
               "type": "Microsoft.Web/serverfarms",
-              "apiVersion": "2023-04-01",
+              "apiVersion": "2024-01-01",
               "name": "[variables('appservice_name')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",
@@ -976,7 +976,7 @@
             },
             {
               "type": "Microsoft.Search/searchServices",
-              "apiVersion": "2025-02-01-preview",
+              "apiVersion": "2024-06-01",
               "name": "[variables('search_name')]",
               "location": "[parameters('location')]",
               "tags": "[parameters('tags')]",

@@ -97,7 +97,7 @@ var llmDeployments = [
   }
 ]
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2024-01-01' = { // Updated API version
+resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = { // Updated API version
   name: appservice_name
   location: location
   tags: tags
@@ -455,7 +455,7 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource searchService 'Microsoft.Search/searchServices@2024-06-01' = { // Updated API version
+resource searchService 'Microsoft.Search/searchServices@2023-11-01' = { // Updated API version
   name: search_name
   location: location
   tags: tags
@@ -484,7 +484,7 @@ resource azureopenai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
 }
 
 @batchSize(1)
-resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-10-01' = [for deployment in llmDeployments: {
+resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = [for deployment in llmDeployments: {
   parent: azureopenai
   name: deployment.name
   properties: {
