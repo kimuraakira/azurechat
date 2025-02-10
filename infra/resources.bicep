@@ -6,8 +6,8 @@ param openai_api_version string
 param openAiLocation string
 param openAiSkuName string = 'S0'
 param chatGptDeploymentCapacity int = 1
-param chatGptDeploymentName string = 'chat-gpt-35-turbo'
-param chatGptModelName string = 'chat-gpt-35-turbo'
+param chatGptDeploymentName string = 'gpt-35-turbo'
+param chatGptModelName string = 'gpt-35-turbo'
 param chatGptModelVersion string = '0125'
 param embeddingDeploymentName string = 'text-embedding-ada-002'
 param embeddingDeploymentCapacity int = 1
@@ -97,7 +97,7 @@ var llmDeployments = [
   }
 ]
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = { // Updated API version
+resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = { // Updated API version
   name: appservice_name
   location: location
   tags: tags
