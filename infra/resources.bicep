@@ -19,12 +19,12 @@ param dalleDeploymentName string
 param dalleModelName string
 param dalleApiVersion string
 
-param gptvisionLocation string
-param gptvisionDeploymentCapacity int = 30
-param gptvisionDeploymentName string = 'gpt-4-vision'
-param gptvisionModelName string = 'gpt-4'
-param gptvisionApiVersion string = '2023-12-01-preview'
-param gptvisionModelVersion string = 'vision-preview'
+//param gptvisionLocation string
+//param gptvisionDeploymentCapacity int = 30
+//param gptvisionDeploymentName string = 'gpt-4-vision'
+//param gptvisionModelName string = 'gpt-4'
+//param gptvisionApiVersion string = '2023-12-01-preview'
+//param gptvisionModelVersion string = 'vision-preview'
 
 param speechServiceSkuName string = 'S0'
 
@@ -45,7 +45,7 @@ param tags object = {}
 
 var openai_name = toLower('${name}-aillm-${resourceToken}')
 var openai_dalle_name = toLower('${name}-aidalle-${resourceToken}')
-var openai_gpt_vision_name = toLower('${name}-aivision-${resourceToken}')
+//var openai_gpt_vision_name = toLower('${name}-aivision-${resourceToken}')
 
 var form_recognizer_name = toLower('${name}-form-${resourceToken}')
 var speech_service_name = toLower('${name}-speech-${resourceToken}')
@@ -54,7 +54,9 @@ var search_name = toLower('${name}search${resourceToken}')
 var webapp_name = toLower('${name}-webapp-${resourceToken}')
 var appservice_name = toLower('${name}-app-${resourceToken}')
 // storage name must be less than 24 chars, alphanumeric only - token is 13
-var storage_prefix = take(name, 8)
+var clean_name = replace(replace(name, '-', ''), '_', '')           //
+//var storage_prefix = take(name, 8)
+var storage_prefix = take(clean_name, 8)                            //
 var storage_name = toLower('${storage_prefix}sto${resourceToken}')
 // keyvault name must be less than 24 chars - token is 13
 var kv_prefix = take(name, 7)
@@ -90,14 +92,14 @@ var llmDeployments = [
       name: embeddingModelName
       version: '2'
     }
-    sku: {   // sku の追加
-      name: 'Standard'
-      capacity: embeddingDeploymentCapacity
-    }
+//    sku: {   // sku の追加                     //マスター側では無し。
+//      name: 'Standard'                         //マスター側では無し。
+    capacity: embeddingDeploymentCapacity
+//    }                                          //マスター側では無し。
   }
 ]
 
-resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = { // Updated API version
+resource appServicePlan 'Microsoft.Web/serverfarms@2020-06-01' = { 
   name: appservice_name
   location: location
   tags: tags
@@ -114,7 +116,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = { // Updated AP
   kind: 'linux'
 }
 
-resource webApp 'Microsoft.Web/sites@2024-04-01' = {
+resource webApp 'Microsoft.Web/sites@2020-06-01' = {
   name: webapp_name
   location: location
   tags: union(tags, { 'azd-service-name': 'frontend' })
@@ -137,41 +139,49 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
           value: 'true'
         }
         {
-          name: 'AZURE_OPENAI_VISION_API_KEY'
-          value: '@Microsoft.KeyVault(VaultName=${kv.name};SecretName=${kv::AZURE_OPENAI_VISION_API_KEY.name})'
-        }
-        {
-          name: 'AZURE_OPENAI_VISION_API_INSTANCE_NAME'
-          value: openai_gpt_vision_name
-        }
-        {
-          name: 'AZURE_OPENAI_VISION_API_DEPLOYMENT_NAME'
-          value: gptvisionDeploymentName
-        }
-        {
-          name: 'AZURE_OPENAI_VISION_API_VERSION'
-          value: gptvisionApiVersion
-        }
-        {
+          //  name: 'AZURE_OPENAI_VISION_API_KEY'
+          //value: '@Microsoft.KeyVault(VaultName=${kv.name};SecretName=${kv::AZURE_OPENAI_VISION_API_KEY.name})'
           name: 'AZURE_OPENAI_API_KEY'
           value: '@Microsoft.KeyVault(VaultName=${kv.name};SecretName=${kv::AZURE_OPENAI_API_KEY.name})'
         }
         {
+          //  name: 'AZURE_OPENAI_VISION_API_INSTANCE_NAME'
+          //value: openai_gpt_vision_name
           name: 'AZURE_OPENAI_API_INSTANCE_NAME'
           value: openai_name
         }
         {
+          //name: 'AZURE_OPENAI_VISION_API_DEPLOYMENT_NAME'
+          //value: gptvisionDeploymentName
           name: 'AZURE_OPENAI_API_DEPLOYMENT_NAME'
           value: chatGptDeploymentName
         }
         {
-          name: 'AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME'
-          value: embeddingDeploymentName
+          name: 'AZURE_OPENAI_API_EMBEDDINGS_DEPLOYMENT_NAME'    //移動
+          value: embeddingDeploymentName                         //移動
         }
         {
+          //name: 'AZURE_OPENAI_VISION_API_VERSION'
+          //value: gptvisionApiVersion
           name: 'AZURE_OPENAI_API_VERSION'
           value: openai_api_version
         }
+        //{
+        //  name: 'AZURE_OPENAI_API_KEY'
+        //  value: '@Microsoft.KeyVault(VaultName=${kv.name};SecretName=${kv::AZURE_OPENAI_API_KEY.name})'
+        //}
+        //{
+        //  name: 'AZURE_OPENAI_API_INSTANCE_NAME'
+        //  value: openai_name
+        //}
+        //{
+        //  name: 'AZURE_OPENAI_API_DEPLOYMENT_NAME'
+        //  value: chatGptDeploymentName
+        //}
+        //{
+        //  name: 'AZURE_OPENAI_API_VERSION'
+        //  value: openai_api_version
+        //}
         {
           name: 'AZURE_OPENAI_DALLE_API_KEY'
           value: '@Microsoft.KeyVault(VaultName=${kv.name};SecretName=${kv::AZURE_OPENAI_DALLE_API_KEY.name})'
@@ -256,7 +266,7 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
   }
 }
 
-resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
+resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2021-12-01-preview' = {
   name: la_workspace_name
   location: location
 }
@@ -276,7 +286,7 @@ resource webDiagnosticSettings 'Microsoft.Insights/diagnosticSettings@2021-05-01
   }
 }
 
-resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2020-04-01-preview' = {
   name: guid(kv.id, webApp.name, keyVaultSecretsOfficerRole)
   scope: kv
   properties: {
@@ -286,7 +296,7 @@ resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2022-
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = { // Updated API version
+resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = { // Updated API version
   name: keyVaultName
   location: location
   properties: {
@@ -301,13 +311,13 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = { // Updated API version
     enabledForTemplateDeployment: false
   }
 
-  resource AZURE_OPENAI_VISION_API_KEY 'secrets' = {
-    name: 'AZURE-OPENAI-VISION-API-KEY'
-    properties: {
-      contentType: 'text/plain'
-      value: azureopenaivision.listKeys().key1
-    }
-  }
+  //resource AZURE_OPENAI_VISION_API_KEY 'secrets' = {
+  //  name: 'AZURE-OPENAI-VISION-API-KEY'
+  //  properties: {
+  //    contentType: 'text/plain'
+  //    value: azureopenaivision.listKeys().key1
+  // }
+  //}
 
   resource AZURE_OPENAI_API_KEY 'secrets' = {
     name: 'AZURE-OPENAI-API-KEY'
@@ -374,15 +384,15 @@ resource kv 'Microsoft.KeyVault/vaults@2023-07-01' = { // Updated API version
   }
 }
 
-resource keyVaultSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = { // Updated API version
-  parent: kv
-  name: 'secretName'
-  properties: {
-    value: 'secretValue'
-  }
-}
+//resource keyVaultSecret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = { // Updated API version
+//  parent: kv
+//  name: 'secretName'
+//  properties: {
+//    value: 'secretValue'
+//  }
+//}
 
-resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2024-12-01-preview' = {
+resource cosmosDbAccount 'Microsoft.DocumentDB/databaseAccounts@2023-04-15' = {
   name: cosmos_name
   location: location
   tags: tags
@@ -409,7 +419,7 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15
   }
 }
 
-resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-12-01-preview' = {
+resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15' = {
   name: historyContainerName
   parent: database
   properties: {
@@ -425,7 +435,7 @@ resource historyContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/co
   }
 }
 
-resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2024-12-01-preview' = {
+resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers@2022-05-15' = {
   name: configContainerName
   parent: database
   properties: {
@@ -441,7 +451,7 @@ resource configContainer 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/con
   }
 }
 
-resource formRecognizer 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+resource formRecognizer 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: form_recognizer_name
   location: location
   tags: tags
@@ -455,7 +465,7 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
   }
 }
 
-resource searchService 'Microsoft.Search/searchServices@2023-11-01' = { // Updated API version
+resource searchService 'Microsoft.Search/searchServices@2022-09-01' = { // Updated API version
   name: search_name
   location: location
   tags: tags
@@ -469,7 +479,7 @@ resource searchService 'Microsoft.Search/searchServices@2023-11-01' = { // Updat
   }
 }
 
-resource azureopenai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+resource azureopenai 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: openai_name
   location: openAiLocation
   tags: tags
@@ -484,20 +494,20 @@ resource azureopenai 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
 }
 
 @batchSize(1)
-resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2024-06-01-preview' = [for deployment in llmDeployments: {
+resource llmdeployment 'Microsoft.CognitiveServices/accounts/deployments@2023-05-01' = [for deployment in llmDeployments: {
   parent: azureopenai
   name: deployment.name
   properties: {
     model: deployment.model
-    //raiPolicyName: contains(deployment, 'raiPolicyName') ? deployment.raiPolicyName : null
+   /* raiPolicyName: contains(deployment, 'raiPolicyName') ? deployment.raiPolicyName : null */
   }
-  sku: { //contains(deployment, 'sku') ? deployment.sku : {
+  sku: contains(deployment, 'sku') ? deployment.sku : {
     name: 'Standard'
-    //capacity: deployment.capacity
+    capacity: deployment.capacity                        //マスター側では有り。
   }
 }]
 
-resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: openai_dalle_name
   location: dalleLocation
   tags: tags
@@ -527,36 +537,36 @@ resource azureopenaidalle 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
 
 
 
-resource azureopenaivision 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
-  name: openai_gpt_vision_name
-  location: gptvisionLocation
-  tags: tags
-  kind: 'OpenAI'
-  properties: {
-    customSubDomainName: openai_gpt_vision_name
-    publicNetworkAccess: 'Enabled'
-  }
-  sku: {
-    name: openAiSkuName
-  }
+//resource azureopenaivision 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+//  name: openai_gpt_vision_name
+//  location: gptvisionLocation
+//  tags: tags
+//  kind: 'OpenAI'
+//  properties: {
+//    customSubDomainName: openai_gpt_vision_name
+//    publicNetworkAccess: 'Enabled'
+//  }
+//  sku: {
+//    name: openAiSkuName
+//  }
+//
+//  resource dalleDeployment 'deployments' = {
+//    name: gptvisionDeploymentName
+//    properties: {
+//      model: {
+//        format: 'OpenAI'
+//        name: gptvisionModelName
+//        version:gptvisionModelVersion
+//      }
+//    }
+//    sku: {
+//      name: 'Standard'
+//      capacity: gptvisionDeploymentCapacity
+//    }
+//  }
+//}
 
-  resource dalleDeployment 'deployments' = {
-    name: gptvisionDeploymentName
-    properties: {
-      model: {
-        format: 'OpenAI'
-        name: gptvisionModelName
-        version:gptvisionModelVersion
-      }
-    }
-    sku: {
-      name: 'Standard'
-      capacity: gptvisionDeploymentCapacity
-    }
-  }
-}
-
-resource speechService 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
+resource speechService 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: speech_service_name
   location: location
   tags: tags
@@ -571,7 +581,7 @@ resource speechService 'Microsoft.CognitiveServices/accounts@2024-10-01' = {
 }
 
 // TODO: define good default Sku and settings for storage account
-resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+resource storage 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: storage_name
   location: location
   tags: tags
