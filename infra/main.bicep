@@ -19,8 +19,7 @@ param location string
 })
 param openAILocation string
 
-//param openAISku string = 'S0'
-param openAISku string = 'Standard'
+param openAISku string = 'S0'
 param openAIApiVersion string = '2024-08-01-preview' //kimura 2025-02-10modify
 
 param chatGptDeploymentCapacity int = 30             //kimura 2025-02-10modify
