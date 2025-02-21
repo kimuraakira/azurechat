@@ -54,15 +54,15 @@
     },
     "chatGptDeploymentName": {
       "type": "string",
-      "defaultValue": "chat-gpt-35-turbo"
+      "defaultValue": "gpt-4o-mini"
     },
     "chatGptModelName": {
       "type": "string",
-      "defaultValue": "chat-gpt-35-turbo"
+      "defaultValue": "gpt-4o-mini"
     },
     "chatGptModelVersion": {
       "type": "string",
-      "defaultValue": "0125"
+      "defaultValue": "2024-07-18"
     },
     "embeddingDeploymentName": {
       "type": "string",
@@ -260,15 +260,15 @@
             },
             "chatGptDeploymentName": {
               "type": "string",
-              "defaultValue": "chat-gpt-35-turbo"
+              "defaultValue": "gpt-4o-mini"
             },
             "chatGptModelName": {
               "type": "string",
-              "defaultValue": "chat-gpt-35-turbo"
+              "defaultValue": "gpt-4o-mini"
             },
             "chatGptModelVersion": {
               "type": "string",
-              "defaultValue": "0125"
+              "defaultValue": "2024-07-18"
             },
             "embeddingDeploymentName": {
               "type": "string",
