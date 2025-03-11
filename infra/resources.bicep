@@ -92,10 +92,7 @@ var llmDeployments = [
       name: embeddingModelName
       version: '2'
     }
-//    sku: {   // sku の追加                     //マスター側では無し。
-//      name: 'Standard'                         //マスター側では無し。
     capacity: embeddingDeploymentCapacity
-//    }                                          //マスター側では無し。
   }
 ]
 
@@ -296,7 +293,7 @@ resource kvFunctionAppPermissions 'Microsoft.Authorization/roleAssignments@2020-
   }
 }
 
-resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = { // Updated API version
+resource kv 'Microsoft.KeyVault/vaults@2021-06-01-preview' = { 
   name: keyVaultName
   location: location
   properties: {
@@ -465,7 +462,7 @@ resource formRecognizer 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   }
 }
 
-resource searchService 'Microsoft.Search/searchServices@2022-09-01' = { // Updated API version
+resource searchService 'Microsoft.Search/searchServices@2022-09-01' = { 
   name: search_name
   location: location
   tags: tags
